@@ -8,6 +8,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var streamqueue = require('streamqueue');
 var jscs = require('gulp-jscs');
+var plumber = require('gulp-plumber');
 
 gulp.task('minify', function() {
   var stream = streamqueue({objectMode: true});
@@ -20,13 +21,13 @@ gulp.task('minify', function() {
                   }))
                   .pipe(templateCache({
                     module: 'schemaForm',
-                    root: 'directives/decorators/bootstrap/datepicker/'
+                    root: 'directives/decorators/bootstrap/file/'
                   }))
     );
   stream.queue(gulp.src('./src/*.js'));
 
   stream.done()
-        .pipe(concat('bootstrap-datepicker.min.js'))
+        .pipe(concat('bootstrap-file.min.js'))
         .pipe(uglify())
         .pipe(gulp.dest('.'));
 
@@ -38,19 +39,20 @@ gulp.task('non-minified-dist', function() {
               gulp.src('./src/*.html')
                   .pipe(templateCache({
                     module: 'schemaForm',
-                    root: 'directives/decorators/bootstrap/datepicker/'
+                    root: 'directives/decorators/bootstrap/file/'
                   }))
     );
   stream.queue(gulp.src('./src/*.js'));
 
   stream.done()
-        .pipe(concat('bootstrap-datepicker.js'))
+        .pipe(concat('bootstrap-file.js'))
         .pipe(gulp.dest('.'));
 
 });
 
 gulp.task('jscs', function() {
   gulp.src('./src/**/*.js')
+      .pipe(plumber())
       .pipe(jscs());
 });
 
