@@ -1,11 +1,26 @@
 <div class="form-group" ng-controller="FileCtrl" ng-class="{'has-error': hasError()}">
   <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
-  <input ng-show="form.key"
-         style="background-color: white"
-         type="file"
-         class="form-control"
-         ng-file-select="onFileSelect($files)" />
 
-  <!--ng-model="$$value$$" -->
+  <span ng-if="!$$value$$ && !uploading">
+    <input ng-show="form.key"
+           style="background-color: white"
+           type="file"
+           class="form-control"
+           ng-file-select="onFileSelect($files)" />
+  </span>
+  <div class='form-control' ng-if="uploading && progress < 100">
+    <div class="progress">
+      <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%">
+        <span class="sr-only">{{progress}}% Complete</span>
+      </div>
+    </div>
+  </div>
+  <span ng-if="$$value$$ && !uploading">
+    <div class='form-control'>
+      <a href="{{$$value$$.url}}" target="_blank">{{$$value$$.originalFilename}}</a>
+      <button class="btn btn-xs btn-danger" ng-click="$$value$$ = null">מחק קובץ</button>
+    </div>
+  </span>
+
   <span class="help-block">{{ (hasError() && errorMessage(schemaError())) || form.description}}</span>
 </div>
