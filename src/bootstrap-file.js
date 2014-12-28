@@ -38,7 +38,7 @@ angular.module('schemaForm')
     '	</div>' +
     '</div>' +
     '<div ng-show="data">' +
-    '  <div style="margin: 5px; padding-right: 35px; font-weight: bold;" ng-bind-html="data.name"></div>' + 
+    '  <div style="margin: 5px; padding-right: 35px; font-weight: bold;" ng-bind-html="data.name"></div>' +
     '  <div style="margin-right: 35px;" class="btn btn-default" ng-click="download()">הורד קובץ</div>' +
     '  <div ng-disabled="form.readonly" class="btn btn-danger" ng-click="remove()"><i class="glyphicon glyphicon-trash"></i> מחק קובץ</div>' +
     '</div>',
@@ -97,7 +97,7 @@ angular.module('schemaForm')
           error = {
             code: 302,
             schemaPath: '/',
-            message: 'קובץ מסוג לא תקין. סניתן להעלות קבצים מסוג: ' + scope.form.accept
+            message: 'קובץ מסוג לא תקין. ניתן להעלות קבצים מסוג: ' + scope.form.accept
           };
           ngModel.$setValidity('schema', false);
         } else if (
