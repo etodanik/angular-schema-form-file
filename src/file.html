@@ -1,26 +1,18 @@
-<div class="form-group" ng-controller="FileCtrl" ng-class="{'has-error': hasError()}">
+<div class="form-group" ng-class="{'has-error': hasError(), 'has-success': hasSuccess(), 'has-feedback': form.feedback !== false }">
   <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
+  <div assureit-decorator-upload
+    ng-show="form.key"
+    type="text"
+    sf-changed="form"
+    placeholder="{{form.placeholder}}"
+    ng-model-options="form.ngModelOptions"
+    ng-model="$$value$$"
+    schema-validate="form"></div>
 
-  <span ng-if="!$$value$$ && !uploading">
-    <input ng-show="form.key"
-           style="background-color: white"
-           type="file"
-           class="form-control"
-           ng-file-select="onFileSelect($files)" />
-  </span>
-  <div class='form-control' ng-if="uploading && progress < 100">
-    <div class="progress">
-      <div class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="{{progress}}" aria-valuemin="0" aria-valuemax="100" style="width: {{progress}}%">
-        <span class="sr-only">{{progress}}% Complete</span>
-      </div>
-    </div>
-  </div>
-  <span ng-if="$$value$$ && !uploading">
-    <div class='form-control'>
-      <a href="{{$$value$$.url}}" target="_blank">{{$$value$$.originalFilename}}</a>
-      <button class="btn btn-xs btn-danger" ng-click="$$value$$ = null">מחק קובץ</button>
-    </div>
-  </span>
-
-  <span class="help-block">{{ (hasError() && errorMessage(schemaError())) || form.description}}</span>
+    <span ng-if="form.feedback !== false"
+      class="form-control-feedback"
+      ng-class="evalInScope(form.feedback) || {'glyphicon': true, 'glyphicon-ok': hasSuccess(), 'glyphicon-remove': hasError() }"></span>
+    <div class="help-block"
+      ng-show="(hasError() && errorMessage(schemaError())) || form.description"
+      ng-bind-html="(hasError() && errorMessage(schemaError())) || form.description"></div>
 </div>

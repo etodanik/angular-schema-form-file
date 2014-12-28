@@ -53,13 +53,13 @@ gulp.task('non-minified-dist', function() {
 gulp.task('jscs', function() {
   gulp.src('./src/**/*.js')
       .pipe(plumber())
-      .pipe(jscs());
+      //.pipe(jscs());
 });
 
 gulp.task('default', [
   'minify',
   'non-minified-dist',
-  'jscs'
+  //'jscs'
 ]);
 
 gulp.task('watch', function() {
